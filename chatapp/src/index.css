@@ -164,7 +164,7 @@ code {
     }
     
     .message-sender  {
-      font-weight: bold;
+      /* font-weight: bold; */
       font-size: 1em;
       margin: 0;
     }

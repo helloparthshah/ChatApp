@@ -66,7 +66,7 @@ import React, {Component} from 'react';
             return (
                 <div>
                     <h2 className="header">Hey there, {name}! You have been alloted {number}</h2>
-                    <MessageList messages={this.state.messages} />
+                    <div className="test"><MessageList messages={this.state.messages} /></div>
                     <Input className="input-field" onSubmit={this.addMessage} />
                 </div>
             )
