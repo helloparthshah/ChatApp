@@ -44,7 +44,7 @@ import React, {Component} from 'react';
                     })
                 })
                 .then(currentRoom => {
-                    number=Math.floor(this.state.currentUser.users.length/2)
+                    number=Math.floor(this.state.currentUser.users.length/2)+1
                     /* alert("You have been aloted: "+number) */
                     this.setState({
                         currentRoom,

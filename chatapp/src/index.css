@@ -66,13 +66,11 @@ code {
       font-size: 16px;
       cursor: pointer;
     }
-    /* .App {
-      position: fixed;
-      right: 10px;
+    .App {
       bottom: 0;
-      width: 350px;
       border: 1px solid #ccc;
-    } */
+      width: 100%;
+    }
     body {
       margin: 0;
       padding: 0;
@@ -123,13 +121,6 @@ code {
       font-size: 16px;
       cursor: pointer;
     }
-    /* .App {
-      position: fixed;
-      right: 10px;
-      bottom: 0;
-      width: 350px;
-      border:1px solid #ccc;
-    } */
     .form {
       padding: 30px;
     }
@@ -192,6 +183,7 @@ code {
       background-color: #5E0565;
       color: white;
       font-size: 16px;
+      border: none;
       cursor: pointer;
     }
     .input-field {
