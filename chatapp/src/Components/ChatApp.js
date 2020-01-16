@@ -94,10 +94,9 @@ import React, {Component} from 'react';
                     })
                 })
                 .catch(error => {
-                    if(error.statusCode==409){
-                        alert("User already exists!")
-                        window.location.reload(false);}
+                    alert("User already exists or there was some issue with the server!")
                     console.log(error)
+                    window.location.reload(false)
                 })
             }
 
