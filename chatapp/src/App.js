@@ -5,8 +5,8 @@
     import ChatApp from './Components/ChatApp'; 
 
     const chatkit = new Chatkit({
-      instanceLocator: "v1:us1:265b56ac-dab5-4087-95a4-b4d48fe48905",
-      key: "e3eda54e-0159-41ca-be03-655b60d75fcf:WucK3ikn48JrfmEqi75T3N5AmvEgv4H5+YlKDSua4K4="
+      instanceLocator: "v1:us1:367c69d6-7186-46ee-97bb-f87cbbbecd17",
+      key: "b0a5d059-2913-4a6b-b209-86ec8d2ef3b5:eWAcIprpxGojDUVkopLBtc/TbOQ+iUA332EG/hJHvzY="
     })
     class App extends Component {
         constructor(props) {

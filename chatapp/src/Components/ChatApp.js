@@ -5,6 +5,7 @@ import React, {Component} from 'react';
 
     var name;
     var number;
+    var room;
 
     class ChatApp extends Component {
         constructor(props) {
@@ -20,20 +21,21 @@ import React, {Component} from 'react';
 
         componentDidMount() {
             const chatManager = new ChatManager({
-                instanceLocator: 'v1:us1:265b56ac-dab5-4087-95a4-b4d48fe48905',
+                instanceLocator: 'v1:us1:367c69d6-7186-46ee-97bb-f87cbbbecd17',
                 userId: this.props.currentId,
                 tokenProvider: new TokenProvider({
-                    url: 'https://us1.pusherplatform.io/services/chatkit_token_provider/v1/265b56ac-dab5-4087-95a4-b4d48fe48905/token'
+                    url: 'https://us1.pusherplatform.io/services/chatkit_token_provider/v1/367c69d6-7186-46ee-97bb-f87cbbbecd17/token'
                 })
             })
+            alert("Wait!")
             chatManager
                 .connect()
                 .then(currentUser => {
                     this.setState({ currentUser: currentUser })
                     name=currentUser.id
                     return currentUser.subscribeToRoom({
-                        roomId: "8e7737c0-354f-4416-bd82-b3b4ef1e3aa4",
-                        messageLimit: 100,
+                         roomId: "9116f47e-0d9b-40e5-84d6-a44b968b9894",
+                         messageLimit: 100,
                         hooks: {
                             onMessage: message => {
                                 this.setState({
@@ -43,12 +45,52 @@ import React, {Component} from 'react';
                         }
                     })
                 })
+                .then(() =>{
+                    number=this.state.currentUser.users.length
+                    console.log("Before:"+number)
+                    if(number%2===0){
+                        room=number.toString()
+                        console.log("Joining1..."+room)
+                    return this.state.currentUser.createRoom({
+                        id: room,
+                        name: room,
+                        customData: {
+                          isDirectMessage: true,
+                          userIds: [name],
+                        },
+                    });}
+                    else{
+                        number=number-1
+                    room=number.toString()
+                    console.log("Joining2..."+room)
+                        return this.state.currentUser.subscribeToRoom({
+                            roomId: room,
+                            messageLimit: 100,
+                            hooks: {
+                                onMessage: message => {
+                                    this.setState({
+                                        messages: [...this.state.messages, message],
+                                    })
+                                },
+                            }
+                        })
+                    }
+                })
                 .then(currentRoom => {
-                    number=Math.floor(this.state.currentUser.users.length/2)+1
-                    alert("You have been aloted: "+number)
                     this.setState({
                         currentRoom,
                         users: currentRoom.userIds
+                    })
+                    this.state.currentUser.subscribeToRoom({
+                        roomId: room,
+                        messageLimit: 100,
+                        hooks: {
+                            onMessage: message => {
+                                this.setState({
+                                    messages: [...this.state.messages, message],
+                                })
+                            },
+                        }
                     })
                 })
                 .catch(error => console.log(error))
