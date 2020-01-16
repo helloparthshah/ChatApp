@@ -93,7 +93,12 @@ import React, {Component} from 'react';
                         }
                     })
                 })
-                .catch(error => console.log(error))
+                .catch(error => {
+                    if(error.statusCode==409){
+                        alert("User already exists!")
+                        window.location.reload(false);}
+                    console.log(error)
+                })
             }
 
         addMessage(text) {
