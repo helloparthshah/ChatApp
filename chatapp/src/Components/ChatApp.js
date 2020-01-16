@@ -34,7 +34,7 @@ import React, {Component} from 'react';
                     this.setState({ currentUser: currentUser })
                     name=currentUser.id
                     return currentUser.subscribeToRoom({
-                         roomId: "9116f47e-0d9b-40e5-84d6-a44b968b9894",
+                         roomId: "cff88da4-9924-4f8e-9d87-5dd020c08798",
                          messageLimit: 100,
                         hooks: {
                             onMessage: message => {
