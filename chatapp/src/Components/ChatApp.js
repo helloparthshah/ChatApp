@@ -35,14 +35,6 @@ import React, {Component} from 'react';
                     name=currentUser.id
                     return currentUser.subscribeToRoom({
                          roomId: "cff88da4-9924-4f8e-9d87-5dd020c08798",
-                         messageLimit: 100,
-                        hooks: {
-                            onMessage: message => {
-                                this.setState({
-                                    messages: [...this.state.messages, message],
-                                })
-                            },
-                        }
                     })
                 })
                 .then(() =>{
@@ -94,9 +86,27 @@ import React, {Component} from 'react';
                     })
                 })
                 .catch(error => {
-                    alert("User already exists or there was some issue with the server!")
+                    console.log(this.state.currentUser.rooms)
+                    this.setState({
+                        currentRoom: this.state.currentUser.rooms[0],
+                        users: this.state.currentRoom.userIds,
+                        messages: []
+                    })
+                    this.state.messages=[]
+                        this.state.currentUser.subscribeToRoom({
+                            roomId: this.state.currentUser.rooms[0].id,
+                            messageLimit: 100,
+                            hooks: {
+                                onMessage: message => {
+                                    this.setState({
+                                        messages: [...this.state.messages, message],
+                                    })
+                                },
+                            }
+                        })
+                    alert("User already exists!")
                     console.log(error)
-                    window.location.reload(false)
+                    /* window.location.reload(false) */
                 })
             }
 
@@ -111,7 +121,7 @@ import React, {Component} from 'react';
         render() {
             return (
                 <div>
-                    <h2 className="header">Hey there, {name}! You have been alloted {number}</h2>
+                    <h2 className="header">Hey there, {name}!</h2>
                     <div className="test"><MessageList messages={this.state.messages} /></div>
                     <Input className="input-field" onSubmit={this.addMessage} />
                 </div>
