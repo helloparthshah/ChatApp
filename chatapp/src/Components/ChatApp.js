@@ -58,13 +58,13 @@ import React, {Component} from 'react';
                         return this.state.currentUser.subscribeToRoom({
                             roomId: room,
                             messageLimit: 100,
-                            hooks: {
+                            /* hooks: {
                                 onMessage: message => {
                                     this.setState({
                                         messages: [...this.state.messages, message],
                                     })
                                 },
-                            }
+                            } */
                         })
                     }
                 })
