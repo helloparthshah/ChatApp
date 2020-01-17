@@ -2,6 +2,7 @@ import React, {Component} from 'react';
     import { ChatManager, TokenProvider } from '@pusher/chatkit-client';
     import MessageList from './MessageList';
     import Input from './Input';
+    import keys from './keys'
 
     var name;
     var number;
@@ -21,52 +22,56 @@ import React, {Component} from 'react';
 
         componentDidMount() {
             const chatManager = new ChatManager({
-                instanceLocator: 'v1:us1:367c69d6-7186-46ee-97bb-f87cbbbecd17',
+                instanceLocator: keys.INSTANCE_LOCATOR,
                 userId: this.props.currentId,
                 tokenProvider: new TokenProvider({
-                    url: 'https://us1.pusherplatform.io/services/chatkit_token_provider/v1/367c69d6-7186-46ee-97bb-f87cbbbecd17/token'
+                    url: keys.TOKEN_URL
                 })
             })
-            alert("Wait!")
             chatManager
                 .connect()
                 .then(currentUser => {
                     this.setState({ currentUser: currentUser })
                     name=currentUser.id
                     return currentUser.subscribeToRoom({
-                         roomId: "cff88da4-9924-4f8e-9d87-5dd020c08798",
+                         roomId: keys.ROOM_ID,
+                         messageLimit: 100
                     })
                 })
                 .then(() =>{
                     number=this.state.currentUser.users.length
                     console.log("Before:"+number)
+                    console.log(this.state.currentUser.rooms[0].id)
+                    if(isNaN(this.state.currentUser.rooms[0].id)){
                     if(number%2===0){
                         room=number.toString()
                         console.log("Joining1..."+room)
-                    return this.state.currentUser.createRoom({
-                        id: room,
-                        name: room,
-                        customData: {
-                          isDirectMessage: true,
-                          userIds: [name],
-                        },
-                    });}
+                        return this.state.currentUser.createRoom({
+                            id: room,
+                            name: room,
+                            customData: {
+                            isDirectMessage: true,
+                            userIds: [name],
+                            },
+                        });
+                    }   
                     else{
                         number=number-1
-                    room=number.toString()
-                    console.log("Joining2..."+room)
+                        room=number.toString()
+                        console.log("Joining2..."+room)
                         return this.state.currentUser.subscribeToRoom({
                             roomId: room,
                             messageLimit: 100,
-                            /* hooks: {
-                                onMessage: message => {
-                                    this.setState({
-                                        messages: [...this.state.messages, message],
-                                    })
-                                },
-                            } */
                         })
                     }
+                }
+                else{
+                    room=this.state.currentUser.rooms[0].id
+                    return this.state.currentUser.subscribeToRoom({
+                        roomId: room,
+                        messageLimit: 100,
+                    })
+                }
                 })
                 .then(currentRoom => {
                     this.setState({
@@ -86,27 +91,8 @@ import React, {Component} from 'react';
                     })
                 })
                 .catch(error => {
-                    console.log(this.state.currentUser.rooms)
-                    this.setState({
-                        currentRoom: this.state.currentUser.rooms[0],
-                        users: this.state.currentRoom.userIds,
-                        messages: []
-                    })
-                    this.state.messages=[]
-                        this.state.currentUser.subscribeToRoom({
-                            roomId: this.state.currentUser.rooms[0].id,
-                            messageLimit: 100,
-                            hooks: {
-                                onMessage: message => {
-                                    this.setState({
-                                        messages: [...this.state.messages, message],
-                                    })
-                                },
-                            }
-                        })
-                    alert("User already exists!")
                     console.log(error)
-                    /* window.location.reload(false) */
+                    window.location.reload(false)
                 })
             }
 

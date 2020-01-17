@@ -2,11 +2,12 @@
     import React, { Component } from 'react';
     import ChatMessage from './Components/ChatMessage';
     import Signup from './Components/Signup'; 
-    import ChatApp from './Components/ChatApp'; 
+    import ChatApp from './Components/ChatApp';
+    import keys from './Components/keys' 
 
     const chatkit = new Chatkit({
-      instanceLocator: "v1:us1:367c69d6-7186-46ee-97bb-f87cbbbecd17",
-      key: "b0a5d059-2913-4a6b-b209-86ec8d2ef3b5:eWAcIprpxGojDUVkopLBtc/TbOQ+iUA332EG/hJHvzY="
+      instanceLocator: keys.INSTANCE_LOCATOR,
+      key: keys.SECRET_KEY
     })
     class App extends Component {
         constructor(props) {
@@ -32,6 +33,7 @@
                     currentView: 'chatApp'
                 })
             }).catch((err) => {
+                alert("User already exists!")
                      if(err.status === 400) {
                     this.setState({
                         currentUsername: username,
