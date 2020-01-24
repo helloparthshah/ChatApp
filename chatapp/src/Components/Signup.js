@@ -25,6 +25,10 @@ class  Signup extends Component {
                     <input type="name" name="username" onChange={this.handleChange} className="input" />
                     <button className="submit">Submit</button>
                 </form>
+                <center>
+                <div style={{textAlign:"center",border: '3px solid',width:'55%',borderRadius:'30px'}}>
+                    <h2>If you reload the page please login with the same username as before!</h2>
+                </div></center>
             </div>
         )
     }
